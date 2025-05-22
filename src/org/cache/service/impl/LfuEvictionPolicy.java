@@ -1,18 +1,20 @@
 package org.cache.service.impl;
 import org.cache.model.enums.EvictionPolicyEnum;
 import org.cache.service.EvictionPolicy;
+
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class LfuEvictionPolicy<K> implements EvictionPolicy<K> {
 
-    private final ConcurrentHashMap<K, Integer> keyToFrequency;
-    private final ConcurrentHashMap<Integer, LinkedHashSet<K>> freqToKeysMap;
+    private final HashMap<K, Integer> keyToFrequency;
+    private final HashMap<Integer, LinkedHashSet<K>> freqToKeysMap;
     private int minFrequency;
 
     public LfuEvictionPolicy() {
-        this.keyToFrequency = new ConcurrentHashMap<>();
-        this.freqToKeysMap = new ConcurrentHashMap<>();
+        this.keyToFrequency = new HashMap<>();
+        this.freqToKeysMap = new HashMap<>();
         this.minFrequency = 0;
     }
 

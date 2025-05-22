@@ -2,16 +2,18 @@ package org.cache.service.impl;
 import org.cache.model.Node;
 import org.cache.model.enums.EvictionPolicyEnum;
 import org.cache.service.EvictionPolicy;
+
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class LruEvictionPolicy<K> implements EvictionPolicy<K> {
 
-    private final ConcurrentHashMap<K, Node<K>> map;
+    private final HashMap<K, Node<K>> map;
     Node<K> head = new Node<>(null);
     Node<K> tail = new Node<>(null);
 
     public LruEvictionPolicy(){
-        this.map = new ConcurrentHashMap<>();
+        this.map = new HashMap<>();
         head.next = tail;
         tail.prev = head;
     }

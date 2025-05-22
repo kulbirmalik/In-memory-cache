@@ -29,4 +29,4 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-cache-in-memory.iml
+In-memory-cache.iml

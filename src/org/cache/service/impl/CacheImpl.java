@@ -1,22 +1,24 @@
 package org.cache.service.impl;
 import org.cache.service.Cache;
 import org.cache.service.EvictionPolicy;
+
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CacheImpl<K,V> implements Cache<K,V> {
 
     private final int cacheCapacity;
-    private final ConcurrentHashMap<K,V> store;
+    private final HashMap<K,V> store;
     private final EvictionPolicy<K> evictionPolicy;
 
     public CacheImpl(int cacheCapacity, EvictionPolicy<K> evictionPolicy){
         this.cacheCapacity = cacheCapacity;
-        this.store = new ConcurrentHashMap<>();
+        this.store = new HashMap<>();
         this.evictionPolicy = evictionPolicy;
     }
 
     @Override
-    public V get(K key) {
+    public synchronized V get(K key) {
         if(!store.containsKey(key)){
             return null;
         }else{
@@ -26,7 +28,7 @@ public class CacheImpl<K,V> implements Cache<K,V> {
     }
 
     @Override
-    public void put(K key, V value) {
+    public synchronized void put(K key, V value) {
         if(store.containsKey(key)){
             store.put(key, value);
             evictionPolicy.keyAccessed(key);
